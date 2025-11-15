@@ -1,28 +1,28 @@
 const express = require("express");
 const router = express.Router();
+const auth = require("../middleware/auth");
 
-let boss = {
-  id: 1,
-  name: "Dark Dragon",
-  health: 1000
-};
+let boss = { hp: 100 };
 
-// GET boss status
-router.get("/", (req, res) => {
+// GET boss status (Protected)
+router.get("/", auth, (req, res) => {
   res.json(boss);
 });
 
-// POST attack boss (reduce health)
-router.post("/attack", (req, res) => {
+// POST /boss/attack (Protected)
+router.post("/attack", auth, (req, res) => {
   const { damage } = req.body;
-  if (typeof damage !== "number" || damage <= 0) {
-    return res.status(400).json({ error: "Damage must be a positive number" });
+
+  if (!damage || isNaN(damage)) {
+    return res.status(400).json({ error: "Damage must be a number" });
   }
 
-  boss.health -= damage;
-  if (boss.health < 0) boss.health = 0;
+  boss.hp = Math.max(0, boss.hp - damage);
 
-  res.json({ message: `Boss took ${damage} damage!`, health: boss.health });
+  res.json({
+    message: "You attacked the boss!",
+    boss,
+  });
 });
 
 module.exports = router;

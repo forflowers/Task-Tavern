@@ -37,30 +37,27 @@ router.post("/signup", async (req, res) => {
 });
 
 // -------------------- LOGIN --------------------
-router.post("/login", async (req, res) => {
+router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
-  const user = users.find(u => u.username === username);
+  const user = users.find(
+    (u) => u.username === username && u.password === password
+  );
 
   if (!user) {
-    return res.status(401).json({ error: "Invalid username or password" });
+    return res.status(401).json({ message: "Invalid credentials" });
   }
 
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) {
-    return res.status(401).json({ error: "Invalid username or password" });
-  }
-
-  // Create JWT token
   const token = jwt.sign(
     { id: user.id, username: user.username },
-    JWT_SECRET,
-    { expiresIn: "1d" }
+    process.env.JWT_SECRET,
+    { expiresIn: "2h" }
   );
 
   res.json({
-    message: "Login successful",
-    token
+    message: "Login successful!",
+    token,
+    user: { id: user.id, username: user.username },
   });
 });
 
