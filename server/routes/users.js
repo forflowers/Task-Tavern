@@ -2,7 +2,12 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
-let users = []; // TEMPORARY in-memory storage — will replace with DB later
+let users = [
+  { id: 1, username: "testuser", password: "123456" }
+];
+
+
+]; // TEMPORARY in-memory storage — will replace with DB later
 
 // REGISTER
 router.post("/register", (req, res) => {
