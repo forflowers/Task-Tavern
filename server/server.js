@@ -34,6 +34,18 @@ app.post("/tasks", (req, res) => {
   res.status(201).json(newTask);
 });
 
+const tasksRouter = require("./routes/tasks");
+const roomsRouter = require("./routes/rooms");
+const usersRouter = require("./routes/users");
+const bossRouter = require("./routes/boss");
+
+app.use("/tasks", tasksRouter);
+app.use("/rooms", roomsRouter);
+app.use("/users", usersRouter);
+app.use("/boss", bossRouter);
+
+
+
 // Start server on port 5050
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
