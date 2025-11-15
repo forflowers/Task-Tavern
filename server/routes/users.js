@@ -7,7 +7,7 @@ let users = [
 ];
 
 
-]; // TEMPORARY in-memory storage — will replace with DB later
+; // TEMPORARY in-memory storage — will replace with DB later
 
 // REGISTER
 router.post("/register", (req, res) => {
