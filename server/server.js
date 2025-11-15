@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Basic test route
 app.get("/", (req, res) => {
-  res.send("Task Tavern Server is running ⚔️🐉");
+  res.send("Task Tavern Server is running!!!!!!!!!!!");
 });
 
 // Start server
